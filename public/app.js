@@ -1,6 +1,6 @@
 
-// const url = 'https://loginjwtmongo.herokuapp.com';
-const url = "http://localhost:5000";
+const url = "https://loginjwtmongo.herokuapp.com";
+// const url = "http://localhost:5000";
 // document.getElementById("date").innerHTML = new Date('2019-06-11')
 timeago().render(document.querySelectorAll('.timeago'));
 var socket = io(url);
