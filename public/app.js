@@ -83,7 +83,7 @@ function getProfile() {
     // console.log("url=>", url);
     axios({
         method: 'get',
-        url: "http://localhost:5000/profile",
+        url: url+"/profile",
     }).then((response) => {
         // console.log("welcoming user==>", response);
         // console.log(response.data);
