@@ -7,4 +7,5 @@ module.exports = {
     PORT : PORT,
     SERVER_SECRET : SERVER_SECRET,
     postSecret : postSecret,
+    DBURI : DBURI,
 }
