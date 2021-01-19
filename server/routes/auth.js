@@ -169,7 +169,7 @@ api.post("/forget-password", (req, res, next) => {
                     userEmail: req.body.userEmail,
                     otp: otp
                 }).then((doc) => {
-                    console.log("user created=>> ", doc);
+                    console.log("Otp created=>> ", doc);
                     client.sendEmail({
                         "From": "mudassir_student@sysborg.com",
                         "To": req.body.userEmail,

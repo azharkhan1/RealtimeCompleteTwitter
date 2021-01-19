@@ -1,6 +1,6 @@
 
-const url = "https://loginjwtmongo.herokuapp.com";
-// const url = "http://localhost:5000";
+// const url = "https://loginjwtmongo.herokuapp.com";
+const url = "http://localhost:5000";
 // document.getElementById("date").innerHTML = new Date('2019-06-11')
 timeago().render(document.querySelectorAll('.timeago'));
 var socket = io(url);
@@ -31,7 +31,7 @@ const signup = () => {
 
         if (Http.readyState === 4) {
             let jsonRes = JSON.parse(Http.responseText)
-            console.log(Http.status);
+            // console.log(Http.status);
             if (Http.status === 200) {
                 alert(jsonRes.message);
                 window.location.href = "login.html";
@@ -63,7 +63,7 @@ const login = () => {
 
     Http.onreadystatechange = (e) => {
         if (Http.readyState === 4) {
-            console.log(Http.responseText);
+            // console.log(Http.responseText);
             let jsonRes = JSON.parse(Http.responseText);
 
             if (Http.status === 200) {
@@ -106,14 +106,15 @@ function forgot_password() {
             userEmail: document.getElementById("email").value,
         }
     }).then((response) => {
+        // console.log("response=>",response.data);
         document.getElementById("forgot-response").style.display = "initial";
-        document.getElementById("forgot-response").innerHTML = JSON.stringify(response.message);
-        alert(JSON.stringify(response.message));
+        document.getElementById("forgot-response").innerHTML = JSON.stringify(response.data.message);
+        alert((response.data.message));
         localStorage.setItem("forgot_email", document.getElementById("email").value);
         window.location.href = "reset-password.html";
-
     }, (error) => {
-        console.log(error);
+        document.getElementById("forgot-response").style.display = "initial";
+        document.getElementById("forgot-response").innerHTML = (error.response.data.message);
     })
     return false;
 }
@@ -129,8 +130,9 @@ function checkOtp() {
         otp: document.getElementById("otp").value,
     }))
     Http.onreadystatechange = (e) => {
-        let jsonRes = JSON.parse(Http.responseText);
+
         if (Http.readyState === 4) {
+            let jsonRes = JSON.parse(Http.responseText);
             if (Http.status === 200) {
                 alert(jsonRes.message);
                 window.location.href = "login.html";
@@ -146,9 +148,7 @@ function checkOtp() {
     return false;
 
 }
-const clearTweets = () => {
-    document.getElementById("posts") = "";
-}
+
 
 const getTweets = () => {
     var userEmail = sessionStorage.getItem("userEmail");
