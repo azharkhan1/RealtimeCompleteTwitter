@@ -1,9 +1,13 @@
 
+var {DBURI} = require("../core");
+
+
+
 var mongoose = require("mongoose");
 
 
 
-let dbURI = "mongodb+srv://azhar:azhar@mongodb.xd2iy.mongodb.net/testDB?retryWrites=true&w=majority";
+let dbURI = DBURI ;
 
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
