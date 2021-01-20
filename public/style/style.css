@@ -268,9 +268,11 @@ button:hover {
     vertical-align: top;
 }
 .img{
-    /* width: 270px; */
-    /* position: relative; */
-    height: 150px;
+  vertical-align: middle;
+  width: 170px;
+  border-radius: 50%;
+  display: block;
+  margin: 8px auto;
 }
 .create__post{
     text-align: center;

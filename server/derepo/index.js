@@ -42,6 +42,7 @@ var userSchema = new mongoose.Schema({
     userEmail: String,
     userName: String,
     userPassword: String,
+    profileUrl : String,
 });
 var userModel = mongoose.model("users", userSchema);
 

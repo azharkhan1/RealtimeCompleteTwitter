@@ -33,8 +33,16 @@
     <form class="form-inline">
       <h3 id="welcomeUser">
       </h3>
+ 
+
       <button onclick="logout()" id="lgBtn" class="btn btn-sm btn-outline-secondary ml-3" type="button">LOGOUT</button>
     </form>
+    <form action="#" onsubmit="return upload()">
+      <!-- dont get confused with return keyword inside onsubmit, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
+
+      <input required type="file" id="fileInput">
+      <button id="uploadBtn" type="submit"> Upload </button>
+  </form>
   </nav>
 
 
@@ -48,7 +56,9 @@
       <div>
 
       </div>
-      <img class="img" src="./image/image.jpg" alt="John">
+ 
+      <img class="img " src="./image/image.png" alt="John" id="profilePic">
+     
       <div class="posts__container">
 
         <ul id="posts">

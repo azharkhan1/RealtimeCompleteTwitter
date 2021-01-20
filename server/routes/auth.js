@@ -100,7 +100,8 @@ api.post("/login", (req, res, next) => {
                             userEmail: user.userEmail,
                             userName: user.userName,
                             userPassword: user.userPassword,
-                            ip: req.connection.remoteAddress
+                            ip: req.connection.remoteAddress,
+                            profileUrl : user.profileUrl,
                         }, SERVER_SECRET)
 
                     res.cookie('jToken', token, {
