@@ -269,10 +269,9 @@ button:hover {
 }
 .img{
   vertical-align: middle;
-  width: 170px;
+  width: 140px;
   border-radius: 50%;
   display: block;
-  margin: 8px auto;
 }
 .create__post{
     text-align: center;
