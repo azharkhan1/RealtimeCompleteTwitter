@@ -269,9 +269,10 @@ button:hover {
 }
 .img{
   vertical-align: middle;
-  width: 140px;
+  width: 170px;
   border-radius: 50%;
   display: block;
+  margin: 8px auto;
 }
 .create__post{
     text-align: center;
@@ -320,7 +321,7 @@ ul{
 @media (min-width:775px)
 {
   .myCard{
-      display:flex;
+      /* display:flex; */
       overflow: hidden;
       position: relative;
   }
