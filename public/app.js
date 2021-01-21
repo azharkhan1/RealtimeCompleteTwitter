@@ -375,7 +375,7 @@ function upload() {
 
         })
         .catch(err => {
-            // console.log(err);
+            console.log(err);
         })
 
     return false; // dont get confused with return false, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->

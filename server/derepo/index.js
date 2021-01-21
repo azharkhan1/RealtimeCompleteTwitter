@@ -7,7 +7,7 @@ var mongoose = require("mongoose");
 
 
 
-let dbURI = DBURI;
+let dbURI = DBURI || "mongodb+srv://azhar:azhar@mongodb.xd2iy.mongodb.net/testDB?retryWrites=true&w=majority";
 
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
