@@ -17,7 +17,7 @@ var { SERVER_SECRET, PORT } = require("./core");
 var { userModel, tweetsModel } = require("./derepo");
 var http = require("http");
 
-
+// Firebase bucket
 ////// For sending file to mongoose
 const fs = require('fs')
 const multer = require("multer");
