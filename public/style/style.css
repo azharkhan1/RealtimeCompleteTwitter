@@ -377,6 +377,7 @@ ul{
 }
 #profilePic:hover{
   opacity: 0.7;
+  cursor: pointer;
 }
 .imgContainer{
   position: relative;
