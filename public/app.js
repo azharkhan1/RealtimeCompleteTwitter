@@ -92,6 +92,8 @@ function getProfile() {
         if (response.data.profile.profileUrl) {
             document.getElementById("fileInput").style.display = "none";
             document.getElementById("profilePic").src = response.data.profile.profileUrl;
+            document.getElementById("avatar").src = response.data.profile.profileUrl;
+            
         }
         else{
             document.getElementById("uploadTxt").innerHTML = "Upload profile picture";
