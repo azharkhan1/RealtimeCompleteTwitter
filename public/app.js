@@ -91,11 +91,11 @@ function getProfile() {
         sessionStorage.setItem("userEmail", response.data.profile.userEmail);
         if (response.data.profile.profileUrl) {
             document.getElementById("fileInput").style.display = "none";
-            document.getElementById("uploadBtn").style.display = "none";
             document.getElementById("profilePic").src = response.data.profile.profileUrl;
         }
         else{
             document.getElementById("uploadTxt").innerHTML = "Upload profile picture";
+            document.getElementById("fileInput").setAttribute("id","fileInput");
         }
         getTweets();
     }, (error) => {
@@ -370,8 +370,7 @@ function upload() {
         .then(res => {
             // console.log(`upload Success` + res.data);
             document.getElementById("uploadTxt").innerHTML = ""
-            document.getElementById("uploadBtn").style.display = "none";
-            document.getElementById("fileInput").style.display = "none";
+            location.reload();
 
         })
         .catch(err => {
@@ -385,7 +384,7 @@ function upload() {
 
 function previewFile() {
     const preview = document.querySelector('img');
-    const file = document.querySelector('input[type=file]').files[0];
+    const file = document.querySelector('input[id=fileInput]').files[0];
     const reader = new FileReader();
 
     reader.addEventListener("load", function () {
@@ -398,4 +397,12 @@ function previewFile() {
         document.getElementById("uploadBtn").style.display = "initial";
         document.getElementById("uploadTxt").innerHTML = "Press upload to upload profile picture";
     }
+}
+document.getElementById("uploadPicture").style.display="none";
+
+function changeText(){
+    document.getElementById("uploadPicture").style.display="block";
+}
+function hideText(){
+    document.getElementById("uploadPicture").style.display="none";
 }

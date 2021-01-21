@@ -37,12 +37,6 @@
 
       <button onclick="logout()" id="lgBtn" class="btn btn-sm btn-outline-secondary ml-3" type="button">LOGOUT</button>
     </form>
-    <form action="#" onsubmit="return upload()">
-      <!-- dont get confused with return keyword inside onsubmit, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
-
-      <input required type="file" id="fileInput" onchange="previewFile()">
-      <button id="uploadBtn" type="submit"> Upload </button>
-  </form>
   </nav>
 
 
@@ -57,7 +51,13 @@
 
       </div>
  <div class="imgContainer">
-      <img class="img " src="./image/image.png" alt="John" id="profilePic">
+  <label class="filebutton">
+    <img class="img " src="./image/image.png" alt="John" id="profilePic" onmouseover="changeText()" onmouseout="hideText()">
+    <span><input class="opacityFile" type="file" id="fileInput" name="myfile" onchange="upload()">
+      <p id="uploadPicture">Change profile picture</p>
+    </span>
+    </label>
+     
       <p id="uploadTxt"></p>
     </div>
       <div class="posts__container">
@@ -75,7 +75,6 @@
 
   <script src="app.js"></script>
 <script>
-  document.getElementById("uploadBtn").style.display = "none";
 </script>
 </body>
 

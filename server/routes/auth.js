@@ -89,8 +89,7 @@ api.post("/login", (req, res, next) => {
             })
         }
         else if (user) {
-            console.log("haha",req.body.userPassword);
-            console.log("this is password",user.userPassword);
+       
             bcrypt.varifyHash(req.body.userPassword, user.userPassword).then(isMatched => {
                 if (isMatched) {
 
