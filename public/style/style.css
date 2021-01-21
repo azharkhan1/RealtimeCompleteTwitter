@@ -293,6 +293,9 @@ li{
   /* padding: 10px; */
   transform: rotate(-180deg);
   text-align: justify;
+  /* border-bottom: 1px solid #f5f5; */
+  margin-bottom: 15px;
+  background-color: #f5f5f5;
 }
 ul{
   transform: rotate(180deg);
@@ -331,7 +334,7 @@ ul{
     width:450px;
 }
 .posts__container{
-    margin-left:50px;
+    /* margin-left:50px; */
 }
 
 .myCard__content{
