@@ -235,13 +235,9 @@ app.post("/upload", upload.any(), (req, res, next) => {
                         console.log("my email is => ", userEmail);
                         userModel.findOne({ userEmail: userEmail }, {}, (err, user) => {
                             if (!err) {
-                                tweetsModel.findOne({ userEmail: userEmail }, {}, (err, tweetModel) => {
+                                tweetsModel.updateMany({ userEmail: userEmail }, {profileUrl:urlData[0]}, (err, tweetModel) => {
                                     if (!err) {
-                                        tweetModel.update({ profileUrl: urlData[0] }, (err, tweetProfile)=>{
-                                            if (!err){
-                                                console.log("profile url updated");
-                                            }
-                                        })
+                                        console.log("profile picture updated succesfully");
                                     }
                                 });
                                 console.log("user is ===>", user);

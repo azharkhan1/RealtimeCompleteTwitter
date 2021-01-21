@@ -69,8 +69,6 @@
     </div>
   </div>
   <div class="sidenav">
-    <button onclick="myTweets()">My profile</button>
-      <button onclick="getTweets()">Other's tweets</button>
       <form class="form-inline">
         <h3 id="welcomeUser">
         </h3>
@@ -81,11 +79,12 @@
               <p id="uploadPicture">Change profile picture</p>
             </span>
             </label>
-             
+      
               <p id="uploadTxt"></p>
             </div>
-  
-        <button onclick="logout()" id="lgBtn" class="btn btn-sm btn-outline-secondary ml-3" type="button">LOGOUT</button>
+            <a onclick="myTweets()">My profile</a>
+            <a onclick="getTweets()">Home</a>
+            <button onclick="logout()" id="lgBtn" class="btn btn-sm btn-outline-secondary ml-3" type="button">LOGOUT</button>
   </div>
   <div class="main">
     
@@ -108,6 +107,8 @@ function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
   document.getElementById("openNav").style.display = "inline-block";
 }
+document.getElementById("uploadPicture").style.display="none";
+
 </script>
 
 </body>

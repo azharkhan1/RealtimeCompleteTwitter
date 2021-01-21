@@ -98,6 +98,7 @@ function getProfile() {
         else{
             document.getElementById("uploadTxt").innerHTML = "Upload profile picture";
             document.getElementById("fileInput").setAttribute("id","fileInput");
+            document.getElementById("avatar").src = "./image/image.png";
         }
         getTweets();
     }, (error) => {
@@ -400,7 +401,6 @@ function previewFile() {
         document.getElementById("uploadTxt").innerHTML = "Press upload to upload profile picture";
     }
 }
-document.getElementById("uploadPicture").style.display="none";
 
 function changeText(){
     document.getElementById("uploadPicture").style.display="block";
