@@ -81,7 +81,7 @@ app.use(function (req, res, next) {
             if (diff > 300000) { // expire after 5 min (in milis)
                 res.status(401).send("token expired")
             } else { // issue new token
-                console.log("profile url ==>", decodedData);
+                // console.log("profile url ==>", decodedData);
                 var token = jwt.sign({
                     id: decodedData.id,
                     userName: decodedData.userName,
@@ -118,7 +118,7 @@ app.get("/profile", (req, res, next) => {
 });
 
 app.post("/postTweet", (req, res, next) => {
-    console.log("req body of tweet ", req.body);
+    // console.log("req body of tweet ", req.body);
     if (!req.body.userEmail || !req.body.tweetText) {
         res.status(409).send(`
             Please send useremail and tweet in json body
@@ -131,7 +131,7 @@ app.post("/postTweet", (req, res, next) => {
     userModel.findById(req.body.jToken.id, 'userName userEmail profileUrl',
         (err, user) => {
             if (!err) {
-                console.log("tweet user : " + user);
+                // console.log("tweet user : " + user);
                 tweetsModel.create({
                     userEmail: req.body.userEmail,
                     tweetText: req.body.tweetText,

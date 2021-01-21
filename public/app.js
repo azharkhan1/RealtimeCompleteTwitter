@@ -86,7 +86,7 @@ function getProfile() {
         url: url + "/profile",
     }).then((response) => {
         // console.log("welcoming user==>", response);
-        console.log(response.data);
+        // console.log(response.data);
         document.getElementById('welcomeUser').innerHTML = response.data.profile.userName;
         sessionStorage.setItem("userEmail", response.data.profile.userEmail);
         if (response.data.profile.profileUrl) {
@@ -168,7 +168,7 @@ const getTweets = () => {
 
             data = JSON.parse((Http.responseText));
             // console.log(data);
-            console.log(data)
+            // console.log(data)
             for (let i = 0; i < data.tweets.length; i++) {
                 date = moment((data.tweets[i].createdOn)).fromNow()
                 // if (data.tweets[i].userEmail !== userEmail) {
@@ -244,10 +244,10 @@ const myTweets = () => {
                 // console.log(`this is ${i} tweet = ${jsonRes.tweets[i].createdOn}`);
                 date = moment(jsonRes.tweets[i].createdOn).fromNow()
                 var eachTweet = document.createElement("li");
-                console.log(jsonRes.tweets[i]);
+                // console.log(jsonRes.tweets[i]);
                 if (data.tweets[i].profileUrl)
                 {
-                    console.log("file is ==>" , data.tweets[i].profileUrl)
+                    // console.log("file is ==>" , data.tweets[i].profileUrl)
                 eachTweet.innerHTML =
                     `
                 <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
@@ -283,7 +283,7 @@ const myTweets = () => {
 }
 
 socket.on("NEW_POST", (newPost) => {
-    console.log("new post ==>" , newPost);
+    // console.log("new post ==>" , newPost);
     var eachTweet = document.createElement("li");
     if (newPost.profileUrl)
     {
@@ -344,8 +344,8 @@ function upload() {
     // }
 
 
-    console.log("fileInput: ", fileInput);
-    console.log("fileInput: ", fileInput.files[0]);
+    // console.log("fileInput: ", fileInput);
+    // console.log("fileInput: ", fileInput.files[0]);
 
     let formData = new FormData();
     // https://developer.mozilla.org/en-US/docs/Web/API/FormData/append#syntax
@@ -368,14 +368,14 @@ function upload() {
         headers: { 'Content-Type': 'multipart/form-data' }
     })
         .then(res => {
-            console.log(`upload Success` + res.data);
+            // console.log(`upload Success` + res.data);
             document.getElementById("uploadTxt").innerHTML = ""
             document.getElementById("uploadBtn").style.display = "none";
             document.getElementById("fileInput").style.display = "none";
 
         })
         .catch(err => {
-            console.log(err);
+            // console.log(err);
         })
 
     return false; // dont get confused with return false, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
