@@ -223,7 +223,6 @@ button:hover {
 }
 
 .myCard {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   /* max-width: 300px; */
   margin: 50px auto;
   /* text-align: center; */
@@ -295,7 +294,7 @@ li{
   text-align: justify;
   /* border-bottom: 1px solid #f5f5; */
   margin-bottom: 15px;
-  background-color: #f5f5f5;
+  background-color: #e6e6e6;
 }
 ul{
   transform: rotate(180deg);
@@ -444,4 +443,14 @@ ul{
 }
 #welcomeUser{
   text-align: center;
+}
+.profileInfo{
+  margin-top: 36%;
+}
+#lgBtn{
+  position: absolute;
+  top: 10px;
+  z-index: 1;
+  right: 1px;
+  float: right;
 }

@@ -37,6 +37,7 @@
     <a href="#" class="w3-bar-item w3-button">Link 2</a>
     <a href="#" class="w3-bar-item w3-button">Link 3</a>
   </div>
+  <button id="lgBtn"onclick="logout()" id="lgBtn" class="btn btn-sm btn-outline-secondary ml-3" type="button">LOGOUT</button>
   
   <div class="w3-main" style="margin-left:200px">
     <div class="container">
@@ -70,7 +71,8 @@
   </div>
   <div class="sidenav">
       <form class="form-inline">
-      
+
+      <div class="profileInfo">
         <div class="imgContainer">
           <label class="filebutton">
             <img class="img " src="./image/image.png" alt="John" id="profilePic" onmouseover="changeText()" onmouseout="hideText()">
@@ -86,8 +88,7 @@
               <a onclick="myTweets()">My profile</a>
               <a onclick="getTweets()" >Home</a>
             </div>
- 
-            <button onclick="logout()" id="lgBtn" class="btn btn-sm btn-outline-secondary ml-3" type="button">LOGOUT</button>
+          </div>
   </div>
   <div class="main">
     
