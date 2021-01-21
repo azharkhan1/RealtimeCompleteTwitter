@@ -93,11 +93,11 @@ function getProfile() {
             document.getElementById("fileInput").style.display = "none";
             document.getElementById("profilePic").src = response.data.profile.profileUrl;
             document.getElementById("avatar").src = response.data.profile.profileUrl;
-            
+
         }
-        else{
+        else {
             document.getElementById("uploadTxt").innerHTML = "Upload profile picture";
-            document.getElementById("fileInput").setAttribute("id","fileInput");
+            document.getElementById("fileInput").setAttribute("id", "fileInput");
             document.getElementById("avatar").src = "./image/image.png";
         }
         getTweets();
@@ -176,10 +176,9 @@ const getTweets = () => {
                 date = moment((data.tweets[i].createdOn)).fromNow()
                 // if (data.tweets[i].userEmail !== userEmail) {
                 var eachTweet = document.createElement("li");
-           if (data.tweets[i].profileUrl)
-           {
-            eachTweet.innerHTML =
-            `            
+                if (data.tweets[i].profileUrl) {
+                    eachTweet.innerHTML =
+                        `            
             <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
             <h4 class="userName">
             ${data.tweets[i].userName}
@@ -189,10 +188,10 @@ const getTweets = () => {
         <p class="userPost" datetime=${date}>
             ${data.tweets[i].tweetText}
         </p>`
-           }
-           else{
-            eachTweet.innerHTML =
-            `            
+                }
+                else {
+                    eachTweet.innerHTML =
+                        `            
             <img src="./image/image.png" alt="Avatar" class="avatar">  
             <h4 class="userName">
             ${data.tweets[i].userName}
@@ -202,11 +201,11 @@ const getTweets = () => {
         <p class="userPost" datetime=${date}>
             ${data.tweets[i].tweetText}
         </p>`
-           
-           }
-            
-       
-            
+
+                }
+
+
+
                 // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
                 document.getElementById("posts").appendChild(eachTweet)
                 // }
@@ -248,11 +247,10 @@ const myTweets = () => {
                 date = moment(jsonRes.tweets[i].createdOn).fromNow()
                 var eachTweet = document.createElement("li");
                 // console.log(jsonRes.tweets[i]);
-                if (data.tweets[i].profileUrl)
-                {
+                if (data.tweets[i].profileUrl) {
                     // console.log("file is ==>" , data.tweets[i].profileUrl)
-                eachTweet.innerHTML =
-                    `
+                    eachTweet.innerHTML =
+                        `
                 <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
                     <h4 class="userName">
                     ${jsonRes.tweets[i].userName}
@@ -262,13 +260,13 @@ const myTweets = () => {
                     ${jsonRes.tweets[i].tweetText}
                 </p>`;
 
-                // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
-                document.getElementById("posts").appendChild(eachTweet)
-                
-            }
-            else{
-                eachTweet.innerHTML =
-                    `
+                    // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
+                    document.getElementById("posts").appendChild(eachTweet)
+
+                }
+                else {
+                    eachTweet.innerHTML =
+                        `
                 <img src="./image/image.png" alt="Avatar" class="avatar">  
                     <h4 class="userName">
                     ${jsonRes.tweets[i].userName}
@@ -277,10 +275,10 @@ const myTweets = () => {
                 <p class="userPost">
                     ${jsonRes.tweets[i].tweetText}
                 </p>`;
-                document.getElementById("posts").appendChild(eachTweet)
+                    document.getElementById("posts").appendChild(eachTweet)
 
+                }
             }
-        }
         }
     }
 }
@@ -288,10 +286,9 @@ const myTweets = () => {
 socket.on("NEW_POST", (newPost) => {
     // console.log("new post ==>" , newPost);
     var eachTweet = document.createElement("li");
-    if (newPost.profileUrl)
-    {
+    if (newPost.profileUrl) {
         eachTweet.innerHTML =
-        `
+            `
         <img src="${newPost.profileUrl}" alt="Avatar" class="avatar">  
         <h4 class="userName">
         ${newPost.userName}
@@ -300,13 +297,13 @@ socket.on("NEW_POST", (newPost) => {
     <p class="userPost">
         ${newPost.tweetText}
     </p>`;
-    // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
-    document.getElementById("posts").appendChild(eachTweet)
+        // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
+        document.getElementById("posts").appendChild(eachTweet)
     }
-    
-    else{
+
+    else {
         eachTweet.innerHTML =
-        `
+            `
         <img src="./image/image.png" alt="Avatar" class="avatar">  
         <h4 class="userName">
         ${newPost.userName}
@@ -315,8 +312,8 @@ socket.on("NEW_POST", (newPost) => {
     <p class="userPost">
         ${newPost.tweetText}
     </p>`;
-    // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
-    document.getElementById("posts").appendChild(eachTweet)
+        // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
+        document.getElementById("posts").appendChild(eachTweet)
     }
 })
 
@@ -371,10 +368,8 @@ function upload() {
         headers: { 'Content-Type': 'multipart/form-data' }
     })
         .then(res => {
-            // console.log(`upload Success` + res.data);
             document.getElementById("uploadTxt").innerHTML = ""
-            location.reload();
-
+            document.getElementById("profilePic").src = res.data.url;
         })
         .catch(err => {
             console.log(err);
@@ -402,9 +397,9 @@ function previewFile() {
     }
 }
 
-function changeText(){
-    document.getElementById("uploadPicture").style.display="block";
+function changeText() {
+    document.getElementById("uploadPicture").style.display = "block";
 }
-function hideText(){
-    document.getElementById("uploadPicture").style.display="none";
+function hideText() {
+    document.getElementById("uploadPicture").style.display = "none";
 }

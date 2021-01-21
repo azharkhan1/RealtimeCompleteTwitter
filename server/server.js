@@ -136,14 +136,14 @@ app.post("/postTweet", (req, res, next) => {
                     userEmail: req.body.userEmail,
                     tweetText: req.body.tweetText,
                     userName: user.userName,
-                    profileUrl : user.profileUrl,
+                    profileUrl: user.profileUrl,
                 }).then((data) => {
                     console.log("Tweet created: " + data),
                         res.status(200).send({
                             message: "tweet created",
                             userName: user.userName,
                             userEmail: user.userEmail,
-                            profileUrl : user.profileUrl,
+                            profileUrl: user.profileUrl,
                         });
                     io.emit("NEW_POST", data);
                 }).catch((err) => {
@@ -164,7 +164,7 @@ app.get("/getTweets", (req, res, next) => {
 
     tweetsModel.find({}, (err, data) => {
         if (!err) {
-            userModel.findById(req.body.jToken.id,  (err, user) => {
+            userModel.findById(req.body.jToken.id, (err, user) => {
                 console.log("tweet data=>", data);
                 res.status(200).send({
                     tweets: data,
@@ -235,7 +235,7 @@ app.post("/upload", upload.any(), (req, res, next) => {
                         console.log("my email is => ", userEmail);
                         userModel.findOne({ userEmail: userEmail }, {}, (err, user) => {
                             if (!err) {
-                                tweetsModel.updateMany({ userEmail: userEmail }, {profileUrl:urlData[0]}, (err, tweetModel) => {
+                                tweetsModel.updateMany({ userEmail: userEmail }, { profileUrl: urlData[0] }, (err, tweetModel) => {
                                     if (!err) {
                                         console.log("profile picture updated succesfully");
                                     }
@@ -244,8 +244,7 @@ app.post("/upload", upload.any(), (req, res, next) => {
                                 user.update({ profileUrl: urlData[0] }, (err, updatedUrl) => {
                                     if (!err) {
                                         res.status(200).send({
-                                            message: "profile picture succesfully uploaded",
-                                            url: updatedUrl,
+                                            url: urlData[0],
                                         })
                                         console.log("succesfully uploaded");
                                     }
