@@ -329,6 +329,7 @@ ul{
       /* display:flex; */
       overflow: hidden;
       position: relative;
+      width: 550px;
   }
   .posts__input{
     width:450px;
@@ -437,4 +438,7 @@ ul{
 }
 .filebutton{
   height: 180px;
+}
+.profilefunctions{
+    margin-top: 38px;
 }
