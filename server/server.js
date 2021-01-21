@@ -128,7 +128,7 @@ app.post("/postTweet", (req, res, next) => {
         `)
         return;
     };
-    userModel.findById(req.body.jToken.id, 'userName userEmail',
+    userModel.findById(req.body.jToken.id, 'userName userEmail profileUrl',
         (err, user) => {
             if (!err) {
                 console.log("tweet user : " + user);
@@ -136,12 +136,14 @@ app.post("/postTweet", (req, res, next) => {
                     userEmail: req.body.userEmail,
                     tweetText: req.body.tweetText,
                     userName: user.userName,
+                    profileUrl : user.profileUrl,
                 }).then((data) => {
                     console.log("Tweet created: " + data),
                         res.status(200).send({
                             message: "tweet created",
                             userName: user.userName,
                             userEmail: user.userEmail,
+                            profileUrl : user.profileUrl,
                         });
                     io.emit("NEW_POST", data);
                 }).catch((err) => {
@@ -162,11 +164,10 @@ app.get("/getTweets", (req, res, next) => {
 
     tweetsModel.find({}, (err, data) => {
         if (!err) {
-            userModel.findById(req.body.jToken.id, "profileUrl", (err, user) => {
+            userModel.findById(req.body.jToken.id,  (err, user) => {
                 console.log("tweet data=>", data);
                 res.status(200).send({
                     tweets: data,
-                    profileUrl: user.profileUrl,
                 });
             })
         }
@@ -234,6 +235,15 @@ app.post("/upload", upload.any(), (req, res, next) => {
                         console.log("my email is => ", userEmail);
                         userModel.findOne({ userEmail: userEmail }, {}, (err, user) => {
                             if (!err) {
+                                tweetsModel.findOne({ userEmail: userEmail }, {}, (err, tweetModel) => {
+                                    if (!err) {
+                                        tweetModel.update({ profileUrl: urlData[0] }, (err, tweetProfile)=>{
+                                            if (!err){
+                                                console.log("profile url updated");
+                                            }
+                                        })
+                                    }
+                                });
                                 console.log("user is ===>", user);
                                 user.update({ profileUrl: urlData[0] }, (err, updatedUrl) => {
                                     if (!err) {

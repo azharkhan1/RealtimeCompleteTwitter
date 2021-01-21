@@ -1,6 +1,6 @@
 
-const url = "https://loginjwtmongo.herokuapp.com";
-// const url = "http://localhost:5000";
+// const url = "https://loginjwtmongo.herokuapp.com";
+const url = "http://localhost:5000";
 // document.getElementById("date").innerHTML = new Date('2019-06-11')
 timeago().render(document.querySelectorAll('.timeago'));
 var socket = io(url);
@@ -93,7 +93,9 @@ function getProfile() {
             document.getElementById("fileInput").style.display = "none";
             document.getElementById("uploadBtn").style.display = "none";
             document.getElementById("profilePic").src = response.data.profile.profileUrl;
-
+        }
+        else{
+            document.getElementById("uploadTxt").innerHTML = "Upload profile picture";
         }
         getTweets();
     }, (error) => {
@@ -171,16 +173,35 @@ const getTweets = () => {
                 date = moment((data.tweets[i].createdOn)).fromNow()
                 // if (data.tweets[i].userEmail !== userEmail) {
                 var eachTweet = document.createElement("li");
+           if (data.tweets[i].profileUrl)
+           {
+            eachTweet.innerHTML =
+            `            
+            <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
+            <h4 class="userName">
+            ${data.tweets[i].userName}
+        </h4> 
+        <small class="timeago">${date}</small>
+    
+        <p class="userPost" datetime=${date}>
+            ${data.tweets[i].tweetText}
+        </p>`
+           }
+           else{
+            eachTweet.innerHTML =
+            `            
+            <img src="./image/image.png" alt="Avatar" class="avatar">  
+            <h4 class="userName">
+            ${data.tweets[i].userName}
+        </h4> 
+        <small class="timeago">${date}</small>
+    
+        <p class="userPost" datetime=${date}>
+            ${data.tweets[i].tweetText}
+        </p>`
            
-                eachTweet.innerHTML =
-                `                <h4 class="userName">
-                ${data.tweets[i].userName}
-            </h4> 
-            <small class="timeago">${date}</small>
-        
-            <p class="userPost" datetime=${date}>
-                ${data.tweets[i].tweetText}
-            </p>`;
+           }
+            
        
             
                 // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
@@ -221,30 +242,55 @@ const myTweets = () => {
             // console.log(jsonRes);
             for (let i = 0; i < jsonRes.tweets.length; i++) {
                 // console.log(`this is ${i} tweet = ${jsonRes.tweets[i].createdOn}`);
-
+                date = moment(jsonRes.tweets[i].createdOn).fromNow()
                 var eachTweet = document.createElement("li");
+                console.log(jsonRes.tweets[i]);
+                if (data.tweets[i].profileUrl)
+                {
+                    console.log("file is ==>" , data.tweets[i].profileUrl)
                 eachTweet.innerHTML =
-                    `<h4 class="userName">
+                    `
+                <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
+                    <h4 class="userName">
                     ${jsonRes.tweets[i].userName}
                 </h4> 
-                <small class="timeago">${jsonRes.tweets[i].createdOn}</small>
+                <small class="timeago">${date}</small>
                 <p class="userPost">
                     ${jsonRes.tweets[i].tweetText}
                 </p>`;
 
                 // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
                 document.getElementById("posts").appendChild(eachTweet)
+                
+            }
+            else{
+                eachTweet.innerHTML =
+                    `
+                <img src="./image/image.png" alt="Avatar" class="avatar">  
+                    <h4 class="userName">
+                    ${jsonRes.tweets[i].userName}
+                </h4> 
+                <small class="timeago">${date}</small>
+                <p class="userPost">
+                    ${jsonRes.tweets[i].tweetText}
+                </p>`;
+                document.getElementById("posts").appendChild(eachTweet)
 
             }
+        }
         }
     }
 }
 
 socket.on("NEW_POST", (newPost) => {
-
+    console.log("new post ==>" , newPost);
     var eachTweet = document.createElement("li");
-    eachTweet.innerHTML =
-        `<h4 class="userName">
+    if (newPost.profileUrl)
+    {
+        eachTweet.innerHTML =
+        `
+        <img src="${newPost.profileUrl}" alt="Avatar" class="avatar">  
+        <h4 class="userName">
         ${newPost.userName}
     </h4> 
     <small class="timeago">${moment(newPost.createdOn).fromNow()}</small>
@@ -253,6 +299,22 @@ socket.on("NEW_POST", (newPost) => {
     </p>`;
     // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
     document.getElementById("posts").appendChild(eachTweet)
+    }
+    
+    else{
+        eachTweet.innerHTML =
+        `
+        <img src="./image/image.png" alt="Avatar" class="avatar">  
+        <h4 class="userName">
+        ${newPost.userName}
+    </h4> 
+    <small class="timeago">${moment(newPost.createdOn).fromNow()}</small>
+    <p class="userPost">
+        ${newPost.tweetText}
+    </p>`;
+    // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
+    document.getElementById("posts").appendChild(eachTweet)
+    }
 })
 
 
@@ -307,6 +369,10 @@ function upload() {
     })
         .then(res => {
             console.log(`upload Success` + res.data);
+            document.getElementById("uploadTxt").innerHTML = ""
+            document.getElementById("uploadBtn").style.display = "none";
+            document.getElementById("fileInput").style.display = "none";
+
         })
         .catch(err => {
             console.log(err);
@@ -314,4 +380,22 @@ function upload() {
 
     return false; // dont get confused with return false, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
 
+}
+
+
+function previewFile() {
+    const preview = document.querySelector('img');
+    const file = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener("load", function () {
+        // convert image file to base64 string
+        preview.src = reader.result;
+    }, false);
+
+    if (file) {
+        reader.readAsDataURL(file);
+        document.getElementById("uploadBtn").style.display = "initial";
+        document.getElementById("uploadTxt").innerHTML = "Press upload to upload profile picture";
+    }
 }

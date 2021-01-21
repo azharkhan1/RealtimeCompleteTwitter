@@ -266,6 +266,7 @@ button:hover {
     display: inline;
     align-content: flex-end;
     vertical-align: top;
+    font-size: 18px;
 }
 .img{
   vertical-align: middle;
@@ -347,9 +348,21 @@ ul{
   display: inline-block;
   /* float: right; */
   /* position: absolute; */
-  right: -24px;
-  /* top: 20px; */
+  /* right: -24px; */
+  top: 6px;
   font-size: 10px;
   font-weight: bolder;
   position: relative;
+  float: right;
+}
+.avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.userPost{
+  position:relative;
+  left: 58px;
+  top: -25px;
 }

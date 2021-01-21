@@ -7,7 +7,7 @@ var mongoose = require("mongoose");
 
 
 
-let dbURI = DBURI ;
+let dbURI = DBURI;
 
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -57,6 +57,7 @@ var tweetsSchema = mongoose.Schema({
     userEmail : String,
     tweetText : String,
     userName : String,
+    profileUrl : String,
     "createdOn" : { "type": Date, "default": Date.now },
 })
 
