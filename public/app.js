@@ -1,6 +1,6 @@
 
-const url = "https://azhartwitterapp.herokuapp.com";
-// const url = "http://localhost:5000";
+// const url = "https://azhartwitterapp.herokuapp.com";
+const url = "http://localhost:5000";
 // document.getElementById("date").innerHTML = new Date('2019-06-11')
 timeago().render(document.querySelectorAll('.timeago'));
 var socket = io(url);
@@ -398,6 +398,7 @@ function previewFile() {
 }
 
 function changeText() {
+  
     document.getElementById("uploadPicture").style.display = "block";
 }
 function hideText() {

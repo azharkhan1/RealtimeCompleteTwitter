@@ -261,10 +261,13 @@ button:hover {
 }
 
 .userName {
-    display: inline;
-    align-content: flex-end;
-    vertical-align: top;
+    /* display: inline; */
+    /* align-content: flex-end; */
+    /* vertical-align: top; */
     font-size: 18px;
+    position: relative;
+    bottom: 52px;
+    left: 55px;
 }
 .img{
   vertical-align: middle;
@@ -286,12 +289,12 @@ button:hover {
     /* position: relative; */
 }
 li{
-  list-style: none;
+  /* list-style: none; */
   padding: 10px;
   font-size: 18px;
-  /* padding: 10px; */
+  padding: 10px;
   transform: rotate(-180deg);
-  text-align: justify;
+  /* text-align: justify; */
   /* border-bottom: 1px solid #f5f5; */
   margin-bottom: 15px;
   background-color: #e6e6e6;
@@ -353,11 +356,13 @@ ul{
   /* float: right; */
   /* position: absolute; */
   /* right: -24px; */
-  top: 6px;
+  /* top: 6px; */
   font-size: 10px;
   font-weight: bolder;
   position: relative;
-  float: right;
+  /* float: right; */
+  left: 56px;
+  bottom: 69px;
 }
 .avatar {
   vertical-align: middle;
@@ -368,7 +373,8 @@ ul{
 .userPost{
   position:relative;
   left: 58px;
-  top: -25px;
+  bottom: 57px;
+  left: 45px;
 }
 #uploadTxt{
   text-align: center;
@@ -382,6 +388,7 @@ ul{
 #profilePic:hover{
   opacity: 0.7;
   cursor: pointer;
+  transition: 0.5s;
 }
 .imgContainer{
   position: relative;
