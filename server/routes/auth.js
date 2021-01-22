@@ -3,12 +3,12 @@ var bcrypt = require("bcrypt-inzi");
 var postmark = require("postmark");
 var jwt = require("jsonwebtoken");
 
-var { SERVER_SECRET , postSecret} = require("../core");
+var { SERVER_SECRET , POSTSECRET} = require("../core");
 var { userModel , otpModel  } = require("../derepo");
 
 var api = express.Router();
 
-var client = new postmark.Client(postSecret);
+var client = new postmark.Client(POSTSECRET);
 
 
 
