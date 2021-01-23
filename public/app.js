@@ -93,7 +93,8 @@ function getProfile() {
             document.getElementById("fileInput").style.display = "none";
             document.getElementById("profilePic").src = response.data.profile.profileUrl;
             document.getElementById("avatar").src = response.data.profile.profileUrl;
-
+            document.getElementById("tweetText").placeholder = `What's on your mind, ${response.data.profile.userName}?`;
+            
         }
         else {
             document.getElementById("uploadTxt").innerHTML = "Upload profile picture";
@@ -247,11 +248,11 @@ const myTweets = () => {
                 date = moment(jsonRes.tweets[i].createdOn).fromNow()
                 var eachTweet = document.createElement("li");
                 // console.log(jsonRes.tweets[i]);
-                if (data.tweets[i].profileUrl) {
+                if (jsonRes.tweets[i].profileUrl) {
                     // console.log("file is ==>" , data.tweets[i].profileUrl)
                     eachTweet.innerHTML =
                         `
-                <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
+                <img src="${jsonRes.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
                     <h4 class="userName">
                     ${jsonRes.tweets[i].userName}
                 </h4> 
@@ -329,7 +330,7 @@ let logout = () => {
     })
 }
 
-function upload() {
+function uploadProfilePic() {
 
     var fileInput = document.getElementById("fileInput");
 
@@ -370,6 +371,8 @@ function upload() {
         .then(res => {
             document.getElementById("uploadTxt").innerHTML = ""
             document.getElementById("profilePic").src = res.data.url;
+            document.getElementById("avatar").src = res.data.url;
+
         })
         .catch(err => {
             console.log(err);

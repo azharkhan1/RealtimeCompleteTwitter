@@ -189,7 +189,7 @@ input[type=password]{
   margin: 10px 8px 20px 0px;
   display: inline-block;
   text-decoration: none;
-  width: 105px;
+  width: 140px;
   height: 27px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -199,8 +199,12 @@ input[type=password]{
   -moz-box-shadow: 0 3px rgba(58,87,175,.75);
   box-shadow: 0 3px rgba(58,87,175,.75);
   transition: all 0.1s linear 0s;
-  top: 0px;
+  /* position: relative; */
+  display: block;
+  margin: 0px auto;
   position: relative;
+  top: 15px;
+  right: -11px;
 }
 button:hover {
   /* top: -1px; */
@@ -279,6 +283,9 @@ button:hover {
 .create__post{
     text-align: center;
     margin-top:50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-left: 13px;
 }
 
 .posts__container{
@@ -294,10 +301,10 @@ li{
   font-size: 18px;
   padding: 10px;
   transform: rotate(-180deg);
-  /* text-align: justify; */
+  text-align: justify;
   /* border-bottom: 1px solid #f5f5; */
   margin-bottom: 15px;
-  background-color: #e6e6e6;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 ul{
   transform: rotate(180deg);
@@ -306,15 +313,18 @@ ul{
       border-top:none;
       border-left:none;
       border-right:none;
-      /* position: relative; */
-      /* top: 0px; */
-      border-bottom-color: darkslateblue;
+      position: relative;
+      top: 18px;
+      /* border-bottom-color: darkslateblue; */
       /* border-top-color: darkslateblue; */
-      border-radius: 4px;
+      /* border-radius: 4px; */
+      box-shadow: 0 5px 21px 0 rgba(135,140,157,.2);
+      border-radius: 12px;
+      border-bottom: 0px;
 }
-.posts__input::placeholder{
+/* .posts__input::placeholder{
     text-align: center;
-}
+} */
 @media (max-width:775px)
 {
   .myCard{
@@ -322,7 +332,13 @@ ul{
       overflow: hidden;
   }
   .posts__input{
-    width:200px;
+    width: 300px;
+    position: relative;
+    top: 15px;
+    margin-left: 5px;
+    border-radius: 12px;
+    height: 32px;
+    padding-left: 12px;
 }
 }
 @media (min-width:775px)
@@ -334,7 +350,10 @@ ul{
       width: 550px;
   }
   .posts__input{
-    width:450px;
+    width: 345px;
+    height: 34px;
+    padding-left: 10px;
+    background-color: #F0F2F5;
 }
 .posts__container{
     /* margin-left:50px; */
@@ -369,6 +388,16 @@ ul{
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  /* margin-top: 13px; */
+}
+.Profileavatar{
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  /* margin-top: 13px; */
+  position: relative;
+  top: 16px;
 }
 .userPost{
   position:relative;
@@ -460,4 +489,40 @@ ul{
   z-index: 1;
   right: 1px;
   float: right;
+}
+.image-upload > input
+{
+    display: none;
+}
+.upload-icon{
+	/* width: 26px; */
+	height: 31px;
+	border: 2px solid #5642BE;
+	border-style: dotted;
+	border-radius: 18px;
+	position: absolute;
+	top: 83px;
+	left: 130px;
+	/* top: 85px; */
+}
+.upload-icon img{
+	width: 16px;
+	/* height: 60px; */
+	margin:19px;
+	cursor: pointer;
+	position: relative;
+	bottom: 13px;
+	/* right: 15px; */
+}
+.tweetImage{
+  display:inline;
+  position: relative;
+  top: -97px;
+}
+.create__post__content{
+  margin-top: 42px;
+  position: relative;
+}
+.posts__input:focus{
+  background-color:white;
 }

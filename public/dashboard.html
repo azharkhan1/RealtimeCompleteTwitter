@@ -42,8 +42,25 @@
   <div class="w3-main" style="margin-left:200px">
     <div class="container">
       <div class="create__post">
-        <img id="avatar" alt="Avatar" class="avatar">   <input id="tweetText" placeholder="whats on your mind?" class="posts__input" maxlength="150">
+        <div class="create__post__content">
+          
+        </div>
+        <img id="avatar" alt="Avatar" class="Profileavatar">   <input id="tweetText" placeholder="What's on your mind?" class="posts__input" maxlength="150">
         <button id="postBtn" class="post__button" onclick="postTweet()">Post</button>
+        
+     <div class="tweetImage">
+        <form>
+        <div class="image-upload">
+             <label for="file-input">
+               <div class="upload-icon">
+                <img src="https://image.flaticon.com/icons/png/128/61/61112.png">
+                </div>
+              </label>
+           <input id="file-input" type="file"/>
+          </div>
+     </form>
+    </div>
+  </div>
       </div>
   
       <div class="myCard">
@@ -76,7 +93,7 @@
         <div class="imgContainer">
           <label class="filebutton">
             <img class="img " src="./image/image.png" alt="John" id="profilePic" onmouseover="changeText()" onmouseout="hideText()">
-            <span><input class="opacityFile" type="file" id="fileInput" name="myfile" onchange="upload()">
+            <span><input class="opacityFile" type="file" id="fileInput" name="myfile" onchange="uploadProfilePic()">
               <p id="uploadPicture">Change profile picture</p>
             </span>
             </label>
