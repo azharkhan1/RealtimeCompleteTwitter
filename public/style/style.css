@@ -286,6 +286,8 @@ button:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     margin-left: 13px;
+    width: 470px;
+    margin: 0 auto;
 }
 
 .posts__container{
@@ -305,6 +307,7 @@ li{
   /* border-bottom: 1px solid #f5f5; */
   margin-bottom: 15px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border: 2px solid #f5f5f5f5;
 }
 ul{
   transform: rotate(180deg);

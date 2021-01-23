@@ -1,6 +1,6 @@
 
-const url = "https://azhartwitterapp.herokuapp.com";
-// const url = "http://localhost:5000";
+// const url = "https://azhartwitterapp.herokuapp.com";
+const url = "http://localhost:5000";
 // document.getElementById("date").innerHTML = new Date('2019-06-11')
 timeago().render(document.querySelectorAll('.timeago'));
 var socket = io(url);
@@ -272,7 +272,7 @@ const postTweet = () => {
         }))
         document.getElementById("tweetText").value = "";
         console.log("tweet text part running");
-        return false;
+        
     }
     else {
         console.log("image part running");
@@ -289,16 +289,16 @@ const postTweet = () => {
             .then(res => {
                 console.log("Post tweet succesfully , ", res.data);
                 document.getElementById("tweetText").value = " ";
-                return false;
+        
                 // dont get confused with return false, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
             })
             .catch(err => {
                 console.log(err);
-                return false;
+              
             })
     }
 
-    // dont get confused with return false, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
+    return false;  // dont get confused with return false, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
 
 
 
@@ -549,7 +549,6 @@ function uploadProfilePic() {
 // }
 
 function changeText() {
-
     document.getElementById("uploadPicture").style.display = "block";
 }
 function hideText() {
