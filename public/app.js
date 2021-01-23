@@ -289,7 +289,7 @@ const postTweet = () => {
             .then(res => {
                 console.log("Post tweet succesfully , ", res.data);
                 document.getElementById("tweetText").value = " ";
-        
+                document.getElementById("tweetImage").value = null;
                 // dont get confused with return false, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
             })
             .catch(err => {

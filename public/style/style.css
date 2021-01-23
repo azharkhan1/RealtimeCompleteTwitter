@@ -189,7 +189,7 @@ input[type=password]{
   margin: 10px 8px 20px 0px;
   display: inline-block;
   text-decoration: none;
-  width: 28%;
+  width: 40%;
   height: 27px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -353,7 +353,7 @@ ul{
       width: 550px;
   }
   .posts__input{
-    width: 60%;
+    width: 82%;
     height: 34px;
     padding-left: 10px;
     background-color: #F0F2F5;
@@ -517,7 +517,7 @@ ul{
 	cursor: pointer;
 	position: relative;
 	bottom: 13px;
-	/* right: 15px; */
+	right: 16px;
 	/* float: right; */
 }
 .tweetImage{
