@@ -45,18 +45,18 @@
         <div class="create__post__content">
           
         </div>
-        <img id="avatar" alt="Avatar" class="Profileavatar">   <input id="tweetText" placeholder="What's on your mind?" class="posts__input" maxlength="150">
-        <button id="postBtn" class="post__button" onclick="postTweet()">Post</button>
-        
+        <form action="#" onsubmit="return postTweet()">
+        <img id="avatar" alt="Avatar" class="Profileavatar">   
+        <input id="tweetText" placeholder="What's on your mind?" class="posts__input" maxlength="150">
+        <button id="postBtn" class="post__button">Post</button>
      <div class="tweetImage">
-        <form>
         <div class="image-upload">
-             <label for="file-input">
+             <label for="tweetImage">
                <div class="upload-icon">
-                <img src="https://image.flaticon.com/icons/png/128/61/61112.png">
+                <img src="image/upload.png">
                 </div>
               </label>
-           <input id="file-input" type="file"/>
+           <input id="tweetImage" accept="image/*" type="file"/>
           </div>
      </form>
     </div>

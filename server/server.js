@@ -93,6 +93,7 @@ app.use(function (req, res, next) {
                     httpOnly: true
                 });
                 req.body.jToken = decodedData;
+                req.headers.jToken = decodedData;
                 next();
             }
         } else {
@@ -117,8 +118,9 @@ app.get("/profile", (req, res, next) => {
         })
 });
 
-app.post("/postTweet", (req, res, next) => {
-    // console.log("req body of tweet ", req.body);
+app.post("/postTweet", upload.any(), (req, res, next) => {
+    if (!req.files)
+    {
     if (!req.body.userEmail || !req.body.tweetText) {
         res.status(409).send(`
             Please send useremail and tweet in json body
@@ -158,6 +160,79 @@ app.post("/postTweet", (req, res, next) => {
                 })
             }
         })
+    }
+
+});
+
+
+app.post("/postTweetWithImage", upload.any(), (req, res, next) => {
+
+   console.log("image url is == > " , req.body);
+   bucket.upload(
+    req.files[0].path,
+    // {
+    //     destination: `${new Date().getTime()}-new-image.png`, // give destination name if you want to give a certain name to file in bucket, include date to make name unique otherwise it will replace previous file with the same name
+    // },
+    function (err, file, apiResponse) {
+        if (!err) {
+            // console.log("api resp: ", apiResponse);
+
+            // https://googleapis.dev/nodejs/storage/latest/Bucket.html#getSignedUrl
+            file.getSignedUrl({
+                action: 'read',
+                expires: '03-09-2491'
+            }).then((urlData, err) => {
+                if (!err) {
+                    userModel.findById(req.headers.jToken.id, 'userName userEmail profileUrl',
+                    (err, user) => {
+                        if (!err) {
+                            // console.log("tweet user : " + user);
+                            tweetsModel.create({
+                                userEmail: req.headers.jToken.userEmail,
+                                tweetText: req.body.tweetText,
+                                userName: user.userName,
+                                profileUrl: user.profileUrl,
+                                tweetImage : urlData[0]
+                            }).then((data) => {
+                                // console.log("Tweet created: " + data),
+                                    res.status(200).send({
+                                        message: "tweet created",
+                                        userName: user.userName,
+                                        userEmail: user.userEmail,
+                                        profileUrl: user.profileUrl,
+                                        tweetImage : urlData[0]
+                                    });
+                                io.emit("NEW_POST", data);
+                            }).catch((err) => {
+                                res.status(500).send({
+                                    message: "an error occured : " + err,
+                                });
+                            });
+                        }
+                        else {
+                            res.status.send({
+                                message: "an error occured" + err,
+                            })
+                        }
+                    }) 
+
+                    try {
+                        fs.unlinkSync(req.files[0].path)
+                        //file removed
+                    } catch (err) {
+                        console.error(err)
+                    }
+            
+                }
+            })
+        }else{
+            console.log("err: ", err)
+            res.status(500).send();
+        }
+    });
+  
+
+
 });
 
 app.get("/getTweets", (req, res, next) => {

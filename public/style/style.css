@@ -189,7 +189,7 @@ input[type=password]{
   margin: 10px 8px 20px 0px;
   display: inline-block;
   text-decoration: none;
-  width: 140px;
+  width: 28%;
   height: 27px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -350,7 +350,7 @@ ul{
       width: 550px;
   }
   .posts__input{
-    width: 345px;
+    width: 60%;
     height: 34px;
     padding-left: 10px;
     background-color: #F0F2F5;
@@ -402,8 +402,9 @@ ul{
 .userPost{
   position:relative;
   left: 58px;
-  bottom: 57px;
-  left: 45px;
+  bottom: 50px;
+  left: 13px;
+  font-size: 20px;
 }
 #uploadTxt{
   text-align: center;
@@ -497,22 +498,24 @@ ul{
 .upload-icon{
 	/* width: 26px; */
 	height: 31px;
-	border: 2px solid #5642BE;
-	border-style: dotted;
+	/* border: 2px solid #5642BE; */
+	/* border-style: dotted; */
 	border-radius: 18px;
-	position: absolute;
-	top: 83px;
-	left: 130px;
+	position: relative;
+	top: 78px;
+	/* left: 240px; */
 	/* top: 85px; */
+	left: 189px;
 }
 .upload-icon img{
-	width: 16px;
+	/* width: 16px; */
 	/* height: 60px; */
 	margin:19px;
 	cursor: pointer;
 	position: relative;
 	bottom: 13px;
 	/* right: 15px; */
+	/* float: right; */
 }
 .tweetImage{
   display:inline;
@@ -525,4 +528,14 @@ ul{
 }
 .posts__input:focus{
   background-color:white;
+}
+.tweetPostImage{
+  position:relative;
+  /* bottom: 48px; */
+  margin: 0 auto;
+  width: 100%;
+  bottom: 52px;
+}
+a:hover{
+  cursor:pointer;
 }

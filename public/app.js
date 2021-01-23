@@ -6,7 +6,7 @@ timeago().render(document.querySelectorAll('.timeago'));
 var socket = io(url);
 
 socket.on('connect', function () {
-    // console.log("I am connected");
+    console.log("I am connected");
 });
 
 
@@ -94,7 +94,7 @@ function getProfile() {
             document.getElementById("profilePic").src = response.data.profile.profileUrl;
             document.getElementById("avatar").src = response.data.profile.profileUrl;
             document.getElementById("tweetText").placeholder = `What's on your mind, ${response.data.profile.userName}?`;
-            
+
         }
         else {
             document.getElementById("uploadTxt").innerHTML = "Upload profile picture";
@@ -172,14 +172,34 @@ const getTweets = () => {
 
             data = JSON.parse((Http.responseText));
             // console.log(data);
-            // console.log(data)
+            console.log(data)
             for (let i = 0; i < data.tweets.length; i++) {
+
                 date = moment((data.tweets[i].createdOn)).fromNow()
                 // if (data.tweets[i].userEmail !== userEmail) {
                 var eachTweet = document.createElement("li");
                 if (data.tweets[i].profileUrl) {
-                    eachTweet.innerHTML =
-                        `            
+                    if (!data.tweets[i].tweetImage) {
+                        eachTweet.innerHTML =
+                            `         
+                            <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
+                            <h4 class="userName">
+                            ${data.tweets[i].userName}
+                        </h4> 
+                        <small class="timeago">${date}</small>
+
+                        <p class="userPost" datetime=${date}>
+                            ${data.tweets[i].tweetText}
+                        </p>
+
+                        `
+                    }
+                    else {
+
+
+                        eachTweet.innerHTML =
+                            `            
+
             <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
             <h4 class="userName">
             ${data.tweets[i].userName}
@@ -188,11 +208,16 @@ const getTweets = () => {
     
         <p class="userPost" datetime=${date}>
             ${data.tweets[i].tweetText}
-        </p>`
+        </p>
+        <img class="tweetPostImage"  src=${data.tweets[i].tweetImage}>
+        `
+                    }
                 }
                 else {
-                    eachTweet.innerHTML =
-                        `            
+                    if (!data.tweets[i].tweetImage) {
+
+                        eachTweet.innerHTML =
+                            `            
             <img src="./image/image.png" alt="Avatar" class="avatar">  
             <h4 class="userName">
             ${data.tweets[i].userName}
@@ -202,7 +227,23 @@ const getTweets = () => {
         <p class="userPost" datetime=${date}>
             ${data.tweets[i].tweetText}
         </p>`
+                    }
+                    else {
+                        eachTweet.innerHTML =
+                            `            
+            <img src="./image/image.png" alt="Avatar" class="avatar">  
+            <h4 class="userName">
+            ${data.tweets[i].userName}
+        </h4> 
+        <small class="timeago">${date}</small>
+    
+        <p class="userPost" datetime=${date}>
+            ${data.tweets[i].tweetText}
+        </p>
+        <img class="tweetPostImage"  src=${data.tweets[i].tweetImage}>
+        `
 
+                    }
                 }
 
 
@@ -219,18 +260,49 @@ const getTweets = () => {
 
 
 const postTweet = () => {
+    tweetImage = document.getElementById("tweetImage")
+    console.log("tweet image value = > ", tweetImage.value);
+    if (!tweetImage.value) {
+        const Http = new XMLHttpRequest();
+        Http.open("POST", url + "/postTweet")
+        Http.setRequestHeader("Content-Type", "application/json");
+        Http.send(JSON.stringify({
+            userEmail: sessionStorage.getItem("userEmail"),
+            tweetText: document.getElementById("tweetText").value,
+        }))
+        document.getElementById("tweetText").value = "";
+        console.log("tweet text part running");
+        return false;
+    }
+    else {
+        console.log("image part running");
+        let formData = new FormData();
+        formData.append("myFile", tweetImage.files[0]);
+        formData.append("tweetText", document.getElementById("tweetText").value);
 
-    userEmail = sessionStorage.getItem("userEmail");
-    const Http = new XMLHttpRequest();
-    Http.open("POST", url + "/postTweet")
-    Http.setRequestHeader("Content-Type", "application/json");
-    Http.send(JSON.stringify({
-        userEmail: userEmail,
-        tweetText: document.getElementById("tweetText").value,
-    }))
+        axios({
+            method: 'post',
+            url: url + "/postTweetwithImage",
+            data: formData,
+            headers: { 'Content-Type': 'multipart/form-data' }
+        })
+            .then(res => {
+                console.log("Post tweet succesfully , ", res.data);
+                document.getElementById("tweetText").value = " ";
+                return false;
+                // dont get confused with return false, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
+            })
+            .catch(err => {
+                console.log(err);
+                return false;
+            })
+    }
+
+    // dont get confused with return false, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
 
 
-    document.getElementById("tweetText").value = "";
+
+
 
 }
 
@@ -241,70 +313,131 @@ const myTweets = () => {
     Http.send();
     Http.onreadystatechange = (e) => {
         if (Http.readyState === 4) {
-            let jsonRes = JSON.parse(Http.responseText)
-            // console.log(jsonRes);
-            for (let i = 0; i < jsonRes.tweets.length; i++) {
-                // console.log(`this is ${i} tweet = ${jsonRes.tweets[i].createdOn}`);
-                date = moment(jsonRes.tweets[i].createdOn).fromNow()
+            let data = JSON.parse(Http.responseText)
+            for (let i = 0; i < data.tweets.length; i++) {
+
+                date = moment((data.tweets[i].createdOn)).fromNow()
+                // if (data.tweets[i].userEmail !== userEmail) {
                 var eachTweet = document.createElement("li");
-                // console.log(jsonRes.tweets[i]);
-                if (jsonRes.tweets[i].profileUrl) {
-                    // console.log("file is ==>" , data.tweets[i].profileUrl)
-                    eachTweet.innerHTML =
+                if (data.tweets[i].profileUrl) {
+                    if (!data.tweets[i].tweetImage) {
+                        eachTweet.innerHTML =
+                            `         
+                            <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
+                            <h4 class="userName">
+                            ${data.tweets[i].userName}
+                        </h4> 
+                        <small class="timeago">${date}</small>
+
+                        <p class="userPost" datetime=${date}>
+                            ${data.tweets[i].tweetText}
+                        </p>
+
                         `
-                <img src="${jsonRes.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
-                    <h4 class="userName">
-                    ${jsonRes.tweets[i].userName}
-                </h4> 
-                <small class="timeago">${date}</small>
-                <p class="userPost">
-                    ${jsonRes.tweets[i].tweetText}
-                </p>`;
+                    }
+                    else {
 
-                    // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
-                    document.getElementById("posts").appendChild(eachTweet)
 
+                        eachTweet.innerHTML =
+                            `            
+
+            <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
+            <h4 class="userName">
+            ${data.tweets[i].userName}
+        </h4> 
+        <small class="timeago">${date}</small>
+    
+        <p class="userPost" datetime=${date}>
+            ${data.tweets[i].tweetText}
+        </p>
+        <img class="tweetPostImage"  src=${data.tweets[i].tweetImage}>
+        `
+                    }
                 }
                 else {
-                    eachTweet.innerHTML =
-                        `
-                <img src="./image/image.png" alt="Avatar" class="avatar">  
-                    <h4 class="userName">
-                    ${jsonRes.tweets[i].userName}
-                </h4> 
-                <small class="timeago">${date}</small>
-                <p class="userPost">
-                    ${jsonRes.tweets[i].tweetText}
-                </p>`;
-                    document.getElementById("posts").appendChild(eachTweet)
+                    if (!data.tweets[i].tweetImage) {
 
+                        eachTweet.innerHTML =
+                            `            
+            <img src="./image/image.png" alt="Avatar" class="avatar">  
+            <h4 class="userName">
+            ${data.tweets[i].userName}
+        </h4> 
+        <small class="timeago">${date}</small>
+    
+        <p class="userPost" datetime=${date}>
+            ${data.tweets[i].tweetText}
+        </p>`
+                    }
+                    else {
+                        eachTweet.innerHTML =
+                            `            
+            <img src="./image/image.png" alt="Avatar" class="avatar">  
+            <h4 class="userName">
+            ${data.tweets[i].userName}
+        </h4> 
+        <small class="timeago">${date}</small>
+    
+        <p class="userPost" datetime=${date}>
+            ${data.tweets[i].tweetText}
+        </p>
+        <img class="tweetPostImage"  src=${data.tweets[i].tweetImage}>
+        `
+
+                    }
                 }
+
+
+
+                // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
+                document.getElementById("posts").appendChild(eachTweet)
+                // }
             }
         }
     }
 }
 
 socket.on("NEW_POST", (newPost) => {
-    // console.log("new post ==>" , newPost);
+
+    console.log("new post ==>", newPost);
     var eachTweet = document.createElement("li");
     if (newPost.profileUrl) {
-        eachTweet.innerHTML =
-            `
-        <img src="${newPost.profileUrl}" alt="Avatar" class="avatar">  
-        <h4 class="userName">
-        ${newPost.userName}
-    </h4> 
-    <small class="timeago">${moment(newPost.createdOn).fromNow()}</small>
-    <p class="userPost">
-        ${newPost.tweetText}
-    </p>`;
-        // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
-        document.getElementById("posts").appendChild(eachTweet)
+        if (newPost.tweetImage) {
+            eachTweet.innerHTML =
+                `
+                <img src="${newPost.profileUrl}" alt="Avatar" class="avatar">  
+                <h4 class="userName">
+                ${newPost.userName}
+            </h4> 
+            <small class="timeago">${moment(newPost.createdOn).fromNow()}</small>
+            <p class="userPost">
+                ${newPost.tweetText}
+            </p>
+            <img class="tweetPostImage"  src=${newPost.tweetImage}>
+            `;
+            // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
+            document.getElementById("posts").appendChild(eachTweet)
+
+        }
+        else {
+            eachTweet.innerHTML =
+                `
+            <img src="${newPost.profileUrl}" alt="Avatar" class="avatar">  
+            <h4 class="userName">
+            ${newPost.userName}
+        </h4> 
+        <small class="timeago">${moment(newPost.createdOn).fromNow()}</small>
+        <p class="userPost">
+            ${newPost.tweetText}
+        </p>
+        `;
+        }
     }
 
     else {
-        eachTweet.innerHTML =
-            `
+        if (newPost.tweetImage) {
+            eachTweet.innerHTML =
+                `
         <img src="./image/image.png" alt="Avatar" class="avatar">  
         <h4 class="userName">
         ${newPost.userName}
@@ -312,7 +445,22 @@ socket.on("NEW_POST", (newPost) => {
     <small class="timeago">${moment(newPost.createdOn).fromNow()}</small>
     <p class="userPost">
         ${newPost.tweetText}
-    </p>`;
+    </p>
+    <img class="tweetPostImage"  src=${newPost.tweetImage}>
+    `;
+        }
+        else {
+            eachTweet.innerHTML =
+                `
+    <img src="./image/image.png" alt="Avatar" class="avatar">  
+    <h4 class="userName">
+    ${newPost.userName}
+</h4> 
+<small class="timeago">${moment(newPost.createdOn).fromNow()}</small>
+<p class="userPost">
+    ${newPost.tweetText}
+</p>`;
+        }
         // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
         document.getElementById("posts").appendChild(eachTweet)
     }
@@ -383,25 +531,25 @@ function uploadProfilePic() {
 }
 
 
-function previewFile() {
-    const preview = document.querySelector('img');
-    const file = document.querySelector('input[id=fileInput]').files[0];
-    const reader = new FileReader();
+// function previewFile() {
+//     const preview = document.querySelector('img');
+//     const file = document.querySelector('input[id=fileInput]').files[0];
+//     const reader = new FileReader();
 
-    reader.addEventListener("load", function () {
-        // convert image file to base64 string
-        preview.src = reader.result;
-    }, false);
+//     reader.addEventListener("load", function () {
+//         // convert image file to base64 string
+//         preview.src = reader.result;
+//     }, false);
 
-    if (file) {
-        reader.readAsDataURL(file);
-        document.getElementById("uploadBtn").style.display = "initial";
-        document.getElementById("uploadTxt").innerHTML = "Press upload to upload profile picture";
-    }
-}
+//     if (file) {
+//         reader.readAsDataURL(file);
+//         document.getElementById("uploadBtn").style.display = "initial";
+//         document.getElementById("uploadTxt").innerHTML = "Press upload to upload profile picture";
+//     }
+// }
 
 function changeText() {
-  
+
     document.getElementById("uploadPicture").style.display = "block";
 }
 function hideText() {
