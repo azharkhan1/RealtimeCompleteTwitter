@@ -279,6 +279,8 @@ button:hover {
   border-radius: 50%;
   display: block;
   margin: 8px auto;
+  max-width: 100%;
+  height: auto;
 }
 .create__post{
     text-align: center;
@@ -306,8 +308,9 @@ li{
   text-align: justify;
   /* border-bottom: 1px solid #f5f5; */
   margin-bottom: 15px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 0px 3px 0 rgba(0, 0, 0, 0.2);
   border: 2px solid #f5f5f5f5;
+  border-radius: 16px;
 }
 ul{
   transform: rotate(180deg);
@@ -396,11 +399,13 @@ ul{
 .Profileavatar{
   vertical-align: middle;
   width: 50px;
-  height: 50px;
+  /* height: 50px; */
   border-radius: 50%;
   /* margin-top: 13px; */
   position: relative;
   top: 16px;
+  max-width: 100%;
+  height: auto;
 }
 .userPost{
   position:relative;
@@ -432,10 +437,11 @@ ul{
   margin: 0 auto;
   text-align: center;
   /* top: -99px; */
-  bottom: 84px;
+  bottom: 26px;
   /* color: rgb(255 255 255); */
   font-weight: bold;
   color: black;
+  left: 42px;
 }
 /* The sidebar menu */
 .sidenav {
