@@ -1,6 +1,6 @@
 
-const url = "https://azhartwitterapp.herokuapp.com";
-// const url = "http://localhost:5000";
+// const url = "https://azhartwitterapp.herokuapp.com";
+const url = "http://localhost:5000";
 // document.getElementById("date").innerHTML = new Date('2019-06-11')
 timeago().render(document.querySelectorAll('.timeago'));
 var socket = io(url);
@@ -320,9 +320,17 @@ const myTweets = () => {
     Http.send();
     Http.onreadystatechange = (e) => {
         if (Http.readyState === 4) {
-            let data = JSON.parse(Http.responseText)
-            for (let i = 0; i < data.tweets.length; i++) {
 
+            data = JSON.parse((Http.responseText));
+            profileUrl = data.profileUrl
+   
+            tweets = data.tweets;
+            for (let i = 0; i < tweets.length; i++) {
+               tweets[i].profileUrl = profileUrl
+            }
+        
+
+            for (let i = 0; i < data.tweets.length; i++) {
                 date = moment((data.tweets[i].createdOn)).fromNow()
                 // if (data.tweets[i].userEmail !== userEmail) {
                 var eachTweet = document.createElement("li");
