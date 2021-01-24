@@ -422,7 +422,7 @@ socket.on("NEW_POST", (newPost) => {
             </p>
             <img class="tweetPostImage"  src=${newPost.tweetImage}>
             `;
-            // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
+           
 
         }
         else {
@@ -438,8 +438,7 @@ socket.on("NEW_POST", (newPost) => {
             </p>
             `;
 
-            console.log("No image profile Yes");
-            console.log("tweet is ===> ", newPost.tweetText);
+        
         }
     }
 
@@ -457,7 +456,7 @@ socket.on("NEW_POST", (newPost) => {
     </p>
     <img class="tweetPostImage"  src=${newPost.tweetImage}>
     `;
-            console.log("image Yes profile No");
+           
 
 
         }
@@ -472,11 +471,11 @@ socket.on("NEW_POST", (newPost) => {
 <p class="userPost">
     ${newPost.tweetText}
 </p>`;
-            console.log("image No profile No");
+     
 
 
         }
-        // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
+   
     }
     document.getElementById("posts").appendChild(eachTweet)
 })
