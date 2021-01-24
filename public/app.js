@@ -6,7 +6,7 @@ timeago().render(document.querySelectorAll('.timeago'));
 var socket = io(url);
 
 socket.on('connect', function () {
-    console.log("I am connected");
+    // console.log("I am connected");
 });
 
 
@@ -163,33 +163,46 @@ function checkOtp() {
 
 
 const getTweets = () => {
+
     document.getElementById("posts").innerHTML = "";
     const Http = new XMLHttpRequest();
     Http.open("GET", url + "/getTweets");
     Http.send();
     Http.onreadystatechange = (e) => {
         if (Http.readyState === 4) {
-
+         
             data = JSON.parse((Http.responseText));
-            // console.log(data);
-            console.log(data)
-            for (let i = 0; i < data.tweets.length; i++) {
+            tweets = data.tweets;
+     
+            profileUrl = data.profileUrl
+        for (let i = 0 ; i<tweets.length ; i++)
+        {
+            for (let j = 0 ; j<profileUrl.length ; j++)
+            {
+                if (tweets[i].userEmail === profileUrl[j].userEmail)
+                {
+                    tweets[i].profileUrl = profileUrl[j].profileUrl;
+                }
+            }
+        }
 
-                date = moment((data.tweets[i].createdOn)).fromNow()
+            for (let i = 0; i <tweets.length; i++) {
+
+                date = moment((tweets[i].createdOn)).fromNow()
                 // if (data.tweets[i].userEmail !== userEmail) {
                 var eachTweet = document.createElement("li");
-                if (data.tweets[i].profileUrl) {
-                    if (!data.tweets[i].tweetImage) {
+                if (tweets[i].profileUrl) {
+                    if (!tweets[i].tweetImage) {
                         eachTweet.innerHTML =
                             `         
-                            <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
+                            <img src="${tweets[i].profileUrl}" alt="Avatar" class="avatar">  
                             <h4 class="userName">
-                            ${data.tweets[i].userName}
+                            ${tweets[i].userName}
                         </h4> 
                         <small class="timeago">${date}</small>
 
                         <p class="userPost" datetime=${date}>
-                            ${data.tweets[i].tweetText}
+                            ${tweets[i].tweetText}
                         </p>
 
                         `
@@ -200,32 +213,32 @@ const getTweets = () => {
                         eachTweet.innerHTML =
                             `            
 
-            <img src="${data.tweets[i].profileUrl}" alt="Avatar" class="avatar">  
+            <img src="${tweets[i].profileUrl}" alt="Avatar" class="avatar">  
             <h4 class="userName">
-            ${data.tweets[i].userName}
+            ${tweets[i].userName}
         </h4> 
         <small class="timeago">${date}</small>
     
         <p class="userPost" datetime=${date}>
-            ${data.tweets[i].tweetText}
+            ${tweets[i].tweetText}
         </p>
-        <img class="tweetPostImage"  src=${data.tweets[i].tweetImage}>
+        <img class="tweetPostImage"  src=${tweets[i].tweetImage}>
         `
                     }
                 }
                 else {
-                    if (!data.tweets[i].tweetImage) {
+                    if (!tweets[i].tweetImage) {
 
                         eachTweet.innerHTML =
                             `            
             <img src="./image/image.png" alt="Avatar" class="avatar">  
             <h4 class="userName">
-            ${data.tweets[i].userName}
+            ${tweets[i].userName}
         </h4> 
         <small class="timeago">${date}</small>
     
         <p class="userPost" datetime=${date}>
-            ${data.tweets[i].tweetText}
+            ${tweets[i].tweetText}
         </p>`
                     }
                     else {
@@ -233,21 +246,18 @@ const getTweets = () => {
                             `            
             <img src="./image/image.png" alt="Avatar" class="avatar">  
             <h4 class="userName">
-            ${data.tweets[i].userName}
+            ${tweets[i].userName}
         </h4> 
         <small class="timeago">${date}</small>
     
         <p class="userPost" datetime=${date}>
-            ${data.tweets[i].tweetText}
+            ${tweets[i].tweetText}
         </p>
-        <img class="tweetPostImage"  src=${data.tweets[i].tweetImage}>
+        <img class="tweetPostImage"  src=${tweets[i].tweetImage}>
         `
 
                     }
                 }
-
-
-
                 // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
                 document.getElementById("posts").appendChild(eachTweet)
                 // }
@@ -261,7 +271,7 @@ const getTweets = () => {
 
 const postTweet = () => {
     tweetImage = document.getElementById("tweetImage")
-    console.log("tweet image value = > ", tweetImage.value);
+
     if (!tweetImage.value) {
         const Http = new XMLHttpRequest();
         Http.open("POST", url + "/postTweet")
@@ -271,11 +281,11 @@ const postTweet = () => {
             tweetText: document.getElementById("tweetText").value,
         }))
         document.getElementById("tweetText").value = "";
-        console.log("tweet text part running");
+
         
     }
     else {
-        console.log("image part running");
+  
         let formData = new FormData();
         formData.append("myFile", tweetImage.files[0]);
         formData.append("tweetText", document.getElementById("tweetText").value);
@@ -287,7 +297,7 @@ const postTweet = () => {
             headers: { 'Content-Type': 'multipart/form-data' }
         })
             .then(res => {
-                console.log("Post tweet succesfully , ", res.data);
+           
                 document.getElementById("tweetText").value = " ";
                 document.getElementById("tweetImage").value = null;
                 // dont get confused with return false, it is there to prevent html page to reload/default behaviour, and this have nothing to do with actual file upload process but if you remove it page will reload on submit -->
@@ -399,7 +409,7 @@ const myTweets = () => {
 
 socket.on("NEW_POST", (newPost) => {
 
-    console.log("new post ==>", newPost);
+
     var eachTweet = document.createElement("li");
     if (newPost.profileUrl) {
         if (newPost.tweetImage) {
@@ -431,6 +441,8 @@ socket.on("NEW_POST", (newPost) => {
             ${newPost.tweetText}
         </p>
         `;
+  
+
         }
     }
 
@@ -448,6 +460,8 @@ socket.on("NEW_POST", (newPost) => {
     </p>
     <img class="tweetPostImage"  src=${newPost.tweetImage}>
     `;
+
+
         }
         else {
             eachTweet.innerHTML =
@@ -460,6 +474,8 @@ socket.on("NEW_POST", (newPost) => {
 <p class="userPost">
     ${newPost.tweetText}
 </p>`;
+
+
         }
         // console.log(`User: ${tweets[i]} ${tweets[i].userPosts[j]}`)
         document.getElementById("posts").appendChild(eachTweet)

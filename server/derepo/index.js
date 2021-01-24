@@ -57,7 +57,6 @@ var tweetsSchema = mongoose.Schema({
     userEmail : String,
     tweetText : String,
     userName : String,
-    profileUrl : String,
     tweetImage : String,
     "createdOn" : { "type": Date, "default": Date.now },
 })

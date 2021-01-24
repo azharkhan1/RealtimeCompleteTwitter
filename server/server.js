@@ -138,16 +138,23 @@ app.post("/postTweet", upload.any(), (req, res, next) => {
                     userEmail: req.body.userEmail,
                     tweetText: req.body.tweetText,
                     userName: user.userName,
-                    profileUrl: user.profileUrl,
                 }).then((data) => {
-                    console.log("Tweet created: " + data),
+                    datatoSend = data;
+                    console.log("user profile url is => ",user.profileUrl);
+                    datatoSend.profileUrl = user.profileUrl;
+                    console.log("Tweet created: " + datatoSend),
                         res.status(200).send({
                             message: "tweet created",
                             userName: user.userName,
                             userEmail: user.userEmail,
                             profileUrl: user.profileUrl,
                         });
-                    io.emit("NEW_POST", data);
+                    io.emit("NEW_POST", {
+                        userEmail : user.userEmail,
+                        tweetText : data.tweetText,
+                        userName : user.userName,
+                        profileUrl : user.profileUrl,
+                    });
                 }).catch((err) => {
                     res.status(500).send({
                         message: "an error occured : " + err,
@@ -167,7 +174,7 @@ app.post("/postTweet", upload.any(), (req, res, next) => {
 
 app.post("/postTweetWithImage", upload.any(), (req, res, next) => {
 
-   console.log("image url is == > " , req.body);
+//    console.log("image url is == > " , req.body);
    bucket.upload(
     req.files[0].path,
     // {
@@ -191,18 +198,25 @@ app.post("/postTweetWithImage", upload.any(), (req, res, next) => {
                                 userEmail: req.headers.jToken.userEmail,
                                 tweetText: req.body.tweetText,
                                 userName: user.userName,
-                                profileUrl: user.profileUrl,
                                 tweetImage : urlData[0]
                             }).then((data) => {
                                 // console.log("Tweet created: " + data),
-                                    res.status(200).send({
+                                // console.log("profile url is = > " , user.profileUrl);
+                                // console.log("imgae url is == > ", urlData[0]);
+                                res.status(200).send({
                                         message: "tweet created",
                                         userName: user.userName,
                                         userEmail: user.userEmail,
                                         profileUrl: user.profileUrl,
                                         tweetImage : urlData[0]
                                     });
-                                io.emit("NEW_POST", data);
+                                io.emit("NEW_POST", {
+                                    userEmail: user.userEmail,
+                                    profileUrl : user.profileUrl,
+                                    tweetImage : urlData[0],
+                                    userName : user.userName,
+                                    tweetText : data.tweetText,
+                                });
                             }).catch((err) => {
                                 res.status(500).send({
                                     message: "an error occured : " + err,
@@ -239,10 +253,12 @@ app.get("/getTweets", (req, res, next) => {
 
     tweetsModel.find({}, (err, data) => {
         if (!err) {
-            userModel.findById(req.body.jToken.id, (err, user) => {
+            userModel.find({}, "profileUrl userEmail" , (err, user) => {
                 console.log("tweet data=>", data);
                 res.status(200).send({
                     tweets: data,
+                    profileUrl : user,
+            
                 });
             })
         }
@@ -310,11 +326,6 @@ app.post("/upload", upload.any(), (req, res, next) => {
                         console.log("my email is => ", userEmail);
                         userModel.findOne({ userEmail: userEmail }, {}, (err, user) => {
                             if (!err) {
-                                tweetsModel.updateMany({ userEmail: userEmail }, { profileUrl: urlData[0] }, (err, tweetModel) => {
-                                    if (!err) {
-                                        console.log("profile picture updated succesfully");
-                                    }
-                                });
                                 console.log("user is ===>", user);
                                 user.update({ profileUrl: urlData[0] }, (err, updatedUrl) => {
                                     if (!err) {
